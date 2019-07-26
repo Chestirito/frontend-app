@@ -3,6 +3,11 @@ Frontend App build using react js
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Features Developed
+### Signup Page
+Validation for username, password, email, and referral code. 
+Redirects to sign in page if validation passed.
+
 ## Available Scripts
 
 In the project directory, you can run:
