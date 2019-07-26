@@ -41,8 +41,8 @@ class SignUp extends Component {
               break;
             case 'password': 
               errors.password = 
-                value.length < 8
-                  ? 'Password must be atleast 8 characters long!'
+                value.length < 1
+                  ? 'Password cannot be blank'
                   : '';
               break;
             case 'referralCode': 
@@ -73,25 +73,18 @@ class SignUp extends Component {
             password : password,
             email : email
         }
-        console.log(userData);
         if(this.validateForm(this.state.errors)) {
             this.signUp(userData).then(res => {
-                // if (res.data !== null) {
-                //     sessionStorage.name = res.data.firstName;
-                //     this.props.history.push("/oms");
-                //   } else {
-                //     console.log(`does not work`);
-                //   }
                 console.log(res);
                 this.props.history.push('/signin');
             }).catch(err => 
                 {
-                    console.log(err);
-                    this.setState({formError:'Form error, please re-check fields.'})
+                    console.log(err.response);
+                    this.setState({formError:`${err.response.data.msg}, please re-check fields.`})
                 }
             );
         }else{
-            console.error('Invalid Form')
+            console.error('Invalid Form');
         }
     }
 
