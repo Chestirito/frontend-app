@@ -1,12 +1,31 @@
 # frontend-app
 Frontend App build using react js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Features Developed
 ### Signup Page
-Validation for username, password, email, and referral code. 
-Redirects to sign in page if validation passed.
+Validation for username, password, email, and referral code; none of them can be blank. 
+Display error message appropriately, either from frontend or backend response.
+Redirects to sign in page after creating user by using signup API.
+
+### Signin Page
+Validation for username and password.
+Display error message appropriately, either from frontend or backend response.
+Checks the API, and then redirects to dashboard.
+
+### Forgot Password page
+Forgot password API is integrated. It should redirect to sign in page if succesful but attempting to reset always failed.
+Display error message appropriately from backend response.
+
+### Session Management
+Session storage is created after loggin in.
+Session storage is cleared after 1 hour and user is redirected to login page.
+Alert warning in last 10 seconds.
+
+### Dashboard Side Menu
+Implemented API to get referral code and populate sidebar field. 
+Used session storage query the API.
+
+
 
 ## Available Scripts
 

@@ -17,7 +17,8 @@ class SignIn extends Component {
         password: '',
     },
     formError : '',
-    submitted: false
+    submitted: false,
+    minutesExpiry: 1
   }
 
   componentDidMount = () =>{
@@ -48,17 +49,17 @@ class SignIn extends Component {
   };
   handleSubmit = (event) =>{
     event.preventDefault();
-    const {userName, password} = this.state;
+    const {userName, password, minutesExpiry} = this.state;
     this.setState({submitted:true});
     let userData = {
         username : userName,
         password : password,
     }
-    if(this.validateForm(this.state.errors)) {
+    if(this.validateForm(this.state.errors) && userName !== "" && password !== "") {
         this.login(userData).then(res => {
             console.log(res);
             let expiration = new Date();
-            expiration.setTime(expiration.getTime() + (60*60000));
+            expiration.setTime(expiration.getTime() + (minutesExpiry*60000));
             window.sessionStorage.setItem("username", userName);
             window.sessionStorage.setItem("expiry", expiration.getTime());
             this.props.history.push('/dashboard');
@@ -70,6 +71,7 @@ class SignIn extends Component {
         );
     }else{
         console.error('Invalid Form');
+        this.setState({formError:`Don't leave empty fields.`});
     }
   }
 

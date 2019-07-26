@@ -14,7 +14,7 @@ class Dashboard extends Component{
     componentDidMount = () =>{
         let expiry = sessionStorage.getItem("expiry");
         this.setState({expiry: expiry});
-        this.state.interval = setInterval(this.checkSession, 2000);
+        this.state.interval = setInterval(this.checkSession, 10000);
     }
 
     checkSession = () =>{

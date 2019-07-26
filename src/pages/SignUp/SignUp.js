@@ -56,7 +56,7 @@ class SignUp extends Component {
         }
         this.setState({[name]:value});
     };
-
+    
     validateEmail = (email) => {
         //eslint-disable-next-line
         var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -73,7 +73,7 @@ class SignUp extends Component {
             password : password,
             email : email
         }
-        if(this.validateForm(this.state.errors)) {
+        if(this.validateForm(this.state.errors) && referralCode !== "" && userName !== "" && password !== "" && email !== "") {
             this.signUp(userData).then(res => {
                 console.log(res);
                 this.props.history.push('/signin');
@@ -85,6 +85,7 @@ class SignUp extends Component {
             );
         }else{
             console.error('Invalid Form');
+            this.setState({formError:`Don't leave empty fields.`});
         }
     }
 
