@@ -1,73 +1,93 @@
 import React, { Component } from 'react';
 import './Sidebar.scss';
 import Sidebar, {SidebarStyles} from 'react-sidebar';
+import axios from "axios";
 
 class LeftSidebar extends Component {
 
-  render(){
-    return (
-        <div className="sidebar-container">
-        <ul className="sidebar navbar-nav" >
-                <div className="navigation-type">
-                <li className="nav-item">
-                    <i className="fa fa-home"></i>
-                    <span>Dashboard</span>
-                </li>
+    state = {
+        code: 0
+    }
 
-                <li className="nav-item">
-                    <i className="fa fa-empire"></i>
-                    {/* <i class="fas fa-steering-wheel"></i> */}
-                    <span>Affiliates</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-clock-o"></i>
-                    <span>Stats</span>
-                </li>
+    componentDidMount = () =>{
+        this.getReferral(sessionStorage.getItem("username")).then(res => {
+            console.log(res);
+            this.setState({code: res.data.ref_code});
+        }).catch(err => 
+          {
+              console.log(err.response);
+          })
+    }
 
-                <li className="nav-item">
-                <i className="fa fa-line-chart"></i>
-                    <span>Exchange</span>
-                </li>
-                </div>
-                <div className="Currency-type"><li className="nav-item">
-                    <i className="fa fa-chevron-right"></i>
-                    <span>CLAM</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-chevron-right"></i>
-                    <span>BTC</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-chevron-right"></i>
-                    <span>CAD</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-chevron-right"></i>
-                    <span>USD</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-chevron-right"></i>
-                    <span>GOLD</span>
-                </li>
-                </div>
-                <div className="other-containt">
-                <li className="nav-item">
-                    <i className="fa fa-envelope-square"></i>
-                    <span>Contact</span>
-                </li>
-                <li className="nav-item">
-                    <i className="fa fa-sign-out"></i>
-                    <span>Logout</span>
-                </li>
-                <li className="nav-item">
-                    <span>Referral Code</span>
-                </li>
-                </div>
-            </ul>
+    getReferral = (username) =>{
+        return axios.get(`http://178.128.233.31/frontend/user_data/${username}`);
+    }
 
-    </div>
-    );
-  }
+    render(){
+        let {code} = this.state;
+        return (
+            <div className="sidebar-container">
+            <ul className="sidebar navbar-nav" >
+                    <div className="navigation-type">
+                    <li className="nav-item">
+                        <i className="fa fa-home"></i>
+                        <span>Dashboard</span>
+                    </li>
+
+                    <li className="nav-item">
+                        <i className="fa fa-empire"></i>
+                        {/* <i class="fas fa-steering-wheel"></i> */}
+                        <span>Affiliates</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-clock-o"></i>
+                        <span>Stats</span>
+                    </li>
+
+                    <li className="nav-item">
+                    <i className="fa fa-line-chart"></i>
+                        <span>Exchange</span>
+                    </li>
+                    </div>
+                    <div className="Currency-type"><li className="nav-item">
+                        <i className="fa fa-chevron-right"></i>
+                        <span>CLAM</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-chevron-right"></i>
+                        <span>BTC</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-chevron-right"></i>
+                        <span>CAD</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-chevron-right"></i>
+                        <span>USD</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-chevron-right"></i>
+                        <span>GOLD</span>
+                    </li>
+                    </div>
+                    <div className="other-containt">
+                    <li className="nav-item">
+                        <i className="fa fa-envelope-square"></i>
+                        <span>Contact</span>
+                    </li>
+                    <li className="nav-item">
+                        <i className="fa fa-sign-out"></i>
+                        <span>Logout</span>
+                    </li>
+                    <li className="nav-item">
+                        <span>Referral Code: {code} </span>
+                    </li>
+                    </div>
+                </ul>
+
+        </div>
+        );
+    }
 }
 
 // class LeftSidebar extends Component {

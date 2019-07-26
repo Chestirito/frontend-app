@@ -25,7 +25,7 @@ class Dashboard extends Component{
             this.props.history.push('/signin');
         }
 
-        if(currentTime.getTime() - expiry < 10000 && !alerted){
+        if(expiry - currentTime.getTime() < 10000 && !alerted){
             alert("Session is expiring");
             this.state.alerted = true;
         }
