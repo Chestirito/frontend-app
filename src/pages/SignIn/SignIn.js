@@ -20,6 +20,10 @@ class SignIn extends Component {
     submitted: false
   }
 
+  componentDidMount = () =>{
+    sessionStorage.clear();
+  }
+
   handleChange = ({ target }) => {
     let errors = this.state.errors;
     const name = target.name;
@@ -53,6 +57,10 @@ class SignIn extends Component {
     if(this.validateForm(this.state.errors)) {
         this.login(userData).then(res => {
             console.log(res);
+            let expiration = new Date();
+            expiration.setTime(expiration.getTime() + (60*60000));
+            window.sessionStorage.setItem("username", userName);
+            window.sessionStorage.setItem("expiry", expiration.getTime());
             this.props.history.push('/dashboard');
         }).catch(err => 
           {
