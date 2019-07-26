@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import axios from 'axios';
 
 import './SignUp.scss';
 
@@ -17,6 +17,7 @@ class SignUp extends Component {
             password: '',
             referralCode: ''
         },
+        formError : '',
         submitted: false
     }
 
@@ -64,12 +65,38 @@ class SignUp extends Component {
 
     handleSubmit = (event) =>{
         event.preventDefault();
+        const {referralCode, userName, password, email} = this.state;
         this.setState({submitted:true});
+        let userData = {
+            code : referralCode,
+            username : userName,
+            password : password,
+            email : email
+        }
+        console.log(userData);
         if(this.validateForm(this.state.errors)) {
-            this.props.history.push('/signin');;
+            this.signUp(userData).then(res => {
+                // if (res.data !== null) {
+                //     sessionStorage.name = res.data.firstName;
+                //     this.props.history.push("/oms");
+                //   } else {
+                //     console.log(`does not work`);
+                //   }
+                console.log(res);
+                this.props.history.push('/signin');
+            }).catch(err => 
+                {
+                    console.log(err);
+                    this.setState({formError:'Form error, please re-check fields.'})
+                }
+            );
         }else{
             console.error('Invalid Form')
         }
+    }
+
+    signUp = (userData) =>{
+        return axios.post("http://178.128.233.31/frontend/signup", userData);
     }
 
     //returns true if the properties of errors object are empty
@@ -82,7 +109,7 @@ class SignUp extends Component {
     }
 
     render(){
-        const {errors, submitted} = this.state;
+        const {errors, submitted, formError} = this.state;
         return (<div className="signin-container">
                     <div >
                         <form onSubmit={this.handleSubmit}>
@@ -153,6 +180,12 @@ class SignUp extends Component {
                                     <p>{errors.referralCode}</p>
                                 }
                                 </div>
+                            </div>
+                            <div className='error'> 
+                                {
+                                    formError.length > 0  &&
+                                    <p>{formError}</p>
+                                }
                             </div>
                             <div >
                                 <button 
