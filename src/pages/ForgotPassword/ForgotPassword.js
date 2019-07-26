@@ -10,7 +10,6 @@ class ForgotPassword extends Component {
     errors: {
         email: ''
     },
-    formError : '',
     submitted: false
   }
 
@@ -39,7 +38,7 @@ class ForgotPassword extends Component {
         email: email
     }
     console.log(userData);
-    if(this.validateForm(this.state.errors)) {
+    if(this.validateForm(this.state.errors) && email !== "") {
         this.reset(userData).then(res => {
             console.log(res);
             //this.props.history.push('/signin');
@@ -51,6 +50,7 @@ class ForgotPassword extends Component {
         );
     }else{
         console.error('Invalid Form');
+        this.setState({errors:{email:`Don't leave empty fields.`}});
     }
   }
 
@@ -67,7 +67,7 @@ class ForgotPassword extends Component {
   }
 
   render(){
-    const {errors, submitted, formError} = this.state;
+    const {errors, submitted} = this.state;
     return <div className="signin-container">
         <div >
           <form onSubmit={this.handleSubmit}>
