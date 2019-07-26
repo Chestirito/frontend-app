@@ -35,7 +35,7 @@ class SignUp extends Component {
               break;
             case 'email': 
               errors.email = 
-                this.validateEmail(target.value)
+                this.validateEmail(value)
                   ? ''
                   : 'Email is not valid!';
               break;
