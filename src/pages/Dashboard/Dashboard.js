@@ -5,6 +5,32 @@ import { LeftSidebar, TransferModal, DoughnutChart, LineChart, ChartTable, Trans
 
 class Dashboard extends Component{
 
+    state={
+        expiry : 0,
+        interval : 0,
+        alerted : false
+    }
+
+    componentDidMount = () =>{
+        let expiry = sessionStorage.getItem("expiry");
+        this.setState({expiry: expiry});
+        this.state.interval = setInterval(this.checkSession, 2000);
+    }
+
+    checkSession = () =>{
+        const currentTime = new Date();
+        let {expiry, alerted} = this.state;
+        if(currentTime.getTime() > expiry){
+            clearInterval(this.state.interval);
+            this.props.history.push('/signin');
+        }
+
+        if(currentTime.getTime() - expiry < 10000 && !alerted){
+            alert("Session is expiring");
+            this.state.alerted = true;
+        }
+    }
+
     render(){
          return (
             <div className="dashboard-container">
